@@ -13,21 +13,13 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   //! Features - Number Trivia
-  //Bloc
-  sl.registerFactory(
-        () => NumberTriviaBloc(
-      concrete: sl(),
-      inputConverter: sl(),
-      random: sl(),
-    ),
-  );
-sl.registerFactory(() => NumberTriviaController(getRandomNumberTrivia: sl(), getConcreteNumberTrivia: sl(), inputConverter: sl()));
+  //Controller
+  sl.registerFactory(() => NumberTriviaController(getRandomNumberTrivia: sl(), getConcreteNumberTrivia: sl(), inputConverter: sl()));
   //Use Cases
   sl.registerLazySingleton(() => GetConcreteNumberTrivia(sl()));
   sl.registerLazySingleton(() => GetRandomNumberTrivia(sl()));

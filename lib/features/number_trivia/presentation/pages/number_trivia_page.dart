@@ -1,7 +1,4 @@
-import 'package:clean_arquitecture2/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 import 'package:clean_arquitecture2/features/number_trivia/presentation/controllers/number_trivia_controller.dart';
-import 'package:clean_arquitecture2/features/number_trivia/presentation/widgets/loading_widget.dart';
-import 'package:clean_arquitecture2/features/number_trivia/presentation/widgets/message_display.dart';
 import 'package:clean_arquitecture2/features/number_trivia/presentation/widgets/trivia_controls.dart';
 import 'package:clean_arquitecture2/features/number_trivia/presentation/widgets/trivia_display.dart';
 import 'package:flutter/material.dart';
