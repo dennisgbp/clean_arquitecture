@@ -1,70 +1,133 @@
-import 'package:clean_arquitecture2/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:clean_arquitecture2/features/number_trivia/presentation/controllers/number_trivia_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
-class TriviaControls extends StatefulWidget {
-  const TriviaControls({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _TriviaControlsState createState() => _TriviaControlsState();
-}
-
-class _TriviaControlsState extends State<TriviaControls> {
-  final controller = TextEditingController();
+// ignore: must_be_immutable
+class TriviaControls extends StatelessWidget {
+  //final numberCtrl = TextEditingController();
   String inputStr = '';
+
+  late NumberTriviaController _controller;
+
+  TriviaControls({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Input a number',
-          ),
-          onChanged: (value) {
-            inputStr = value;
-          },
-          onSubmitted: (_) {
-            dispatchConcrete();
-          },
-        ),
-        SizedBox(height: 10),
-        Row(
+    _controller = Get.find<NumberTriviaController>();
+    return GetBuilder<NumberTriviaController>(
+      init: _controller,
+      builder: (_) {
+        return Column(
           children: <Widget>[
-            Expanded(
-              child: RaisedButton(
-                child: Text('Search'),
-                color: Theme.of(context).accentColor,
-                textTheme: ButtonTextTheme.primary,
-                onPressed: dispatchConcrete,
+            TextField(
+              controller: _.numberCtrl,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Input a number',
               ),
+              onChanged: (value) {
+                inputStr = value;
+              },
+              // onSubmitted: (_) {
+              //   // dispatchConcrete();
+              // },
             ),
-            SizedBox(width: 10),
-            Expanded(
-              child: RaisedButton(
-                child: Text('Get random trivia'),
-                onPressed: dispatchRandom,
-              ),
-            ),
+            const SizedBox(height: 10),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: RaisedButton(
+                      child: const Text('Search'),
+                      color: Theme
+                          .of(context)
+                          .primaryColor,
+                      textTheme: ButtonTextTheme.primary,
+                      onPressed: () {
+                        _.LoadNumberConcrete(inputStr);
+                        inputStr = '';
+                        // print(inputStr);
+                      }
+                    // dispatchConcrete,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: RaisedButton(
+                      child: const Text('Get random trivia'),
+                      onPressed: () {
+                        _.LoadNumberRandom();
+                        inputStr = '';
+                      }
+                    // dispatchRandom,
+                  ),
+                ),
+              ],
+            )
           ],
-        )
-      ],
+        );
+      }
     );
   }
-
-  void dispatchConcrete() {
-    controller.clear();
-    BlocProvider.of<NumberTriviaBloc>(context)
-        .add(GetTriviaForConcreteNumber(inputStr));
-  }
-
-  void dispatchRandom() {
-    controller.clear();
-    BlocProvider.of<NumberTriviaBloc>(context).add(GetTriviaForRandomNumber());
-  }
 }
+
+
+
+
+  // final controller = TextEditingController();
+  // String inputStr = '';
+
+
+    // return Column(
+    //   children: <Widget>[
+    //     TextField(
+    //       controller: controller,
+    //       keyboardType: TextInputType.number,
+    //       decoration: InputDecoration(
+    //         border: OutlineInputBorder(),
+    //         hintText: 'Input a number',
+    //       ),
+    //       onChanged: (value) {
+    //         inputStr = value;
+    //         print(inputStr);
+    //       },
+    //       onSubmitted: (_) {
+    //         dispatchConcrete();
+    //       },
+    //     ),
+    //     SizedBox(height: 10),
+    //     Row(
+    //       children: <Widget>[
+    //         Expanded(
+    //           child: RaisedButton(
+    //             child: Text('Search'),
+    //             color: Theme.of(context).accentColor,
+    //             textTheme: ButtonTextTheme.primary,
+    //             onPressed: dispatchConcrete,
+    //           ),
+    //         ),
+    //         SizedBox(width: 10),
+    //         Expanded(
+    //           child: RaisedButton(
+    //             child: Text('Get random trivia'),
+    //             onPressed: dispatchRandom,
+    //           ),
+    //         ),
+    //       ],
+    //     )
+    //   ],
+    // );
+
+
+  // void dispatchConcrete() {
+  //   controller.clear();
+  //   BlocProvider.of<NumberTriviaBloc>(context)
+  //       .add(GetTriviaForConcreteNumber(inputStr));
+  // }
+
+  // void dispatchRandom() {
+  //   controller.clear();
+  //   BlocProvider.of<NumberTriviaBloc>(context).add(GetTriviaForRandomNumber());
+  //   print(context);
+  // }
+

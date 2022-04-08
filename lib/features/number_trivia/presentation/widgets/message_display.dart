@@ -16,7 +16,7 @@ class MessageDisplay extends StatelessWidget {
         child: SingleChildScrollView(
           child: Text(
             message,
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: 25,color: Colors.purple),
             textAlign: TextAlign.center,
           ),
         ),

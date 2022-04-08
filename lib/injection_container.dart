@@ -6,6 +6,7 @@ import 'package:clean_arquitecture2/features/number_trivia/data/repositories/num
 import 'package:clean_arquitecture2/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:clean_arquitecture2/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:clean_arquitecture2/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
+import 'package:clean_arquitecture2/features/number_trivia/presentation/controllers/number_trivia_controller.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 
@@ -26,7 +27,7 @@ Future<void> init() async {
       random: sl(),
     ),
   );
-
+sl.registerFactory(() => NumberTriviaController(getRandomNumberTrivia: sl(), getConcreteNumberTrivia: sl(), inputConverter: sl()));
   //Use Cases
   sl.registerLazySingleton(() => GetConcreteNumberTrivia(sl()));
   sl.registerLazySingleton(() => GetRandomNumberTrivia(sl()));

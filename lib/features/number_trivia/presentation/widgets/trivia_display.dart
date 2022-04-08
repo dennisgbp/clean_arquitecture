@@ -1,37 +1,52 @@
-import 'package:clean_arquitecture2/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:clean_arquitecture2/features/number_trivia/presentation/controllers/number_trivia_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TriviaDisplay extends StatelessWidget {
-  final NumberTrivia numberTrivia;
+  late NumberTriviaController _controller;
 
-  const TriviaDisplay({
-    Key? key,
-    required this.numberTrivia,
-  }) : super(key: key);
+   TriviaDisplay({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      child: Column(
-        children: <Widget>[
-          Text(
-            numberTrivia.number.toString(),
-            style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-          ),
-          Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Text(
-                  numberTrivia.text,
-                  style: TextStyle(fontSize: 25),
-                  textAlign: TextAlign.center,
-                ),
+    _controller = Get.find<NumberTriviaController>();
+    return GetBuilder<NumberTriviaController>(
+      id: 'result',
+      init: _controller,
+        builder: (_) {
+          if (_.isLoad.value) {
+            return const Center(child: CircularProgressIndicator(),);
+            } else {
+            return Container(
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 3,
+              child: Column(
+                children:  [
+                  Text(
+                    _.numberTrivia!.number.toString(),
+                    // numberTrivia.number.toString(),
+                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Text(
+                           _.numberTrivia!.text,
+                          // numberTrivia.text,
+                          style: TextStyle(fontSize: 25),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ),
-        ],
-      ),
-    );
+            );
+          }
+        }
+     );
   }
 }
